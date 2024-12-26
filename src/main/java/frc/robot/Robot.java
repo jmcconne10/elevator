@@ -34,10 +34,19 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    // Drive with tank drive.
-    // That means that the Y axis of the left stick moves the left side
-    // of the robot forward and backward, and the Y axis of the right stick
-    // moves the right side of the robot forward and backward.
-    m_robotDrive.tankDrive(-m_driverController.getLeftY(), -m_driverController.getRightY());
+    // Check if the Y button is pressed
+    if (m_driverController.getYButton()) {
+      m_leftMotor.set(1.0);
+      m_rightMotor.set(-1.0);
+    } 
+    // Check if the A button is pressed
+    else if (m_driverController.getAButton()) {
+      m_leftMotor.set(-1.0);
+      m_rightMotor.set(1.0);
+    } 
+    // Otherwise, default to tank drive
+    else {
+      m_robotDrive.tankDrive(-m_driverController.getLeftY(), -m_driverController.getRightY());
+    }
   }
 }
